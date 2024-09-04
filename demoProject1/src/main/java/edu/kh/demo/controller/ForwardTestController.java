@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // * instance : 개발자가 new를 이용해 만든 객체
 // * bean			: Spring(Java)이 만든 객체
 
-// @Controller 어노테이션
+// @Controller 어노테이션(컴파일러가 인식하는 주석)
 // 1) Controller 임을 명시
 // 2) 클래스 작성된 내용대로 구현 
 //    -> 스프링이 객체 생성 == Bean 등록 / Bean 생성
@@ -72,7 +72,7 @@ public class ForwardTestController {
 	 * 
 	 *  */
 	
-	@RequestMapping("forward")
+	@RequestMapping("forward") // /forward 요청 매핑 (GET/POST 가리지 않음)
 	public String forwardTest() {
 		
 		System.out.println("/forward 매핑 됐는지 확인");
