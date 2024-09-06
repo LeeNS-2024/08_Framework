@@ -150,7 +150,7 @@ public class UserController {
 	}
 	
 	
-	/**
+	/** 사용자 정보 삭제
 	 * @param userNo : 주소에서 {userNo} 자리의 값을 얻어와 저장한 변수
 	 * @param ra		 : redirect 시 request scope로 값 전달하는 객체
 	 * @return
