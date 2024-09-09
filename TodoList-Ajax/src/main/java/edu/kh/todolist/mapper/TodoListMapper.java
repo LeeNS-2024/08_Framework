@@ -49,4 +49,10 @@ public interface TodoListMapper {
 	 */
 	int todoDelete(int todoNo);
 
+	/** 일치하는 제목 찾기
+	 * @param todoNo
+	 * @return
+	 */
+	String searchTitle(int todoNo);
+
 }
