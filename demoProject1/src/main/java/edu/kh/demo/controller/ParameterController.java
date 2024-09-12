@@ -100,14 +100,14 @@ public class ParameterController {
 	 * 
 	 * - request객체를 이용한 파라미터 전달 어노테이션 
 	 * - 매개 변수 앞에 해당 어노테이션을 작성하면, 매개변수에 값이 주입됨.
-	 * - 주입되는 데이터는 매개 변수의 타입이 맞게 형변환/파싱이 자동으로 수행됨!
+	 * - 주입되는 데이터는 매개 변수의 타입에 맞게 형변환/파싱이 자동으로 수행됨!
 	 * 
 	 * [기본 작성법]
 	 * @RequestParam("key") 자료형 매개변수명
 	 * 
 	 * 
 	 * [속성 추가 작성법]
-	 * @RequestParam(value="name", required="fasle", defaultValue="1") 
+	 * @RequestParam(value="name", required="false", defaultValue="1") 
 	 * 
 	 * value : 전달 받은 input 태그의 name 속성값
 	 * 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kh.test.customer.mapper.CustomerMapper">
+
+  <insert id="insertCustomer" parameterType="Customer">
+    INSERT INTO CUSTOMER
+    VALUES(SEQ_CUSTOMER_NO.NEXTVAL, #{customerName}, #{customerTel}, #{customerAddress})
+  </insert>
+  
+  <!-- id 값을 insert -> insertCustomer 로 바꿔야하나? -->
+  
+  <!-- #{} 안에 이름들을 각각 name, tel, address 에서 
+  							customerName, customerTel, customerAddress
+  							로 바꾸어준다
+   -->
+  
+  <!-- 
+  		customerName
+  		customerTel
+  		customerAddress
+   -->
+  
+</mapper>
