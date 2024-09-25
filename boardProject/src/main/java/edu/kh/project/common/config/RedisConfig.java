@@ -8,7 +8,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration // Spring의 설정 클래스를 나타냄
-@PropertySource("classpath:config.properties") // 외부 프로퍼티 파일을 로드
+@PropertySource("classpath:/config.properties") // 외부 프로퍼티 파일을 로드
 public class RedisConfig {
 
  @Value("${spring.redis.host}") // 프로퍼티 파일에서 Redis 호스트 값을 주입
