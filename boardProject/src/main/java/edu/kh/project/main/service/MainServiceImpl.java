@@ -15,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // 생성자 생성-> 생성자 방식 의존성 주입 수행
 public class MainServiceImpl implements MainService{
 	
-	private final BCryptPasswordEncoder encoder;
-	
 	private final MainMapper mapper;
+	
+	private final BCryptPasswordEncoder encoder;
 	
 	// 전체 회원 조회
 	@Override
@@ -35,17 +35,18 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public int resetPw(int memberNo) {
 		
+		// "pass01!" 를 암호화 -> BCryptPasswordEncoder 필요
 		String encPw = encoder.encode("pass01!");
 		
 		return mapper.resetPw(memberNo, encPw);
 	}
 	
-	// 탈퇴상태 변경
+	
+	// 회원 탈퇴 상태 변경
 	@Override
 	public int changeStatus(int memberNo) {
 		return mapper.changeStatus(memberNo);
 	}
-	
 }
 
 

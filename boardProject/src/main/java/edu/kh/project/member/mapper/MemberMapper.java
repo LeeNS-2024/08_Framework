@@ -5,9 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import edu.kh.project.member.dto.Member;
 
 // @Mapper
-//	- Mybatis 제공 어노테이션
-//	- 해당 인터페이스를 상속받은 클래스 자동 구현 + Bean 등록
-
+// - Mybatis 제공 어노테이션
+// - 해당 인터페이스를 상속 받은 클래스 자동 구현 + Bean 등록
 
 @Mapper
 public interface MemberMapper {
@@ -20,10 +19,11 @@ public interface MemberMapper {
 
 	/** 회원 가입
 	 * @param inputMember
-	 * @return result
+	 * @return resert
 	 */
 	int signUp(Member inputMember);
 
+	
 	/** 이메일 중복 검사
 	 * @param email
 	 * @return count
@@ -36,10 +36,8 @@ public interface MemberMapper {
 	 */
 	int nicknameCheck(String nickname);
 
-	/** 전화번호 중복 검사
-	 * @param tel
-	 * @return
-	 */
-	int telCheck(String tel);
-
 }
+
+
+
+

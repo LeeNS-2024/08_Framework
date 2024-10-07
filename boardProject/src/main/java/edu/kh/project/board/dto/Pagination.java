@@ -148,7 +148,7 @@ public class Pagination {
 		// 현재 페이지가  1 ~ 10 :   1 page
 		// 현재 페이지가 11 ~ 20 :  11 page
 		startPage = (currentPage - 1) / pageSize * pageSize + 1;
-		// int int 연산 컴퓨터 값처리 연산도 사용해서 소수점 버리는 것까지 계산
+		
 		
 		
 		// endPage : 페이지 번호 목록의 끝 번호

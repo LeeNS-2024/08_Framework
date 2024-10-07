@@ -17,9 +17,9 @@ import edu.kh.project.email.service.EmailService;
 @Controller
 @RequestMapping("email")
 public class EmailController {
-
+	
 	@Autowired // 의존성 주입
-	public RedisUtil redisUtil;
+	public RedisUtil redisUtil; 
 	
 	@Autowired // 의존성 주입
 	public EmailService service;
@@ -30,14 +30,17 @@ public class EmailController {
 	@GetMapping("redisTest") // localhost/email/redisTest?key=name&value=Tom
 	public int redisTest(
 		@RequestParam("key") String key,
-		@RequestParam("value") String value) {
+		@RequestParam("value") String value
+		) {
 		
-		// 전달받은 key, value를 redis에 set 하기
+		// 전달 받은 key, value를 redis에 set 하기
 		redisUtil.setValue(key, value, 60); // 60초 후에 만료
+		
 		return 1;
 	}
 	
-	/** 인증 번호 발송 
+	
+	/** 인증 번호 발송
 	 * @param email : 입력된 이메일
 	 * @return 성공 1, 실패 0
 	 */
@@ -51,15 +54,22 @@ public class EmailController {
 	
 	
 	/** 인증 번호 확인
-	 * @param map : 입력받은 email, authKey가 저장된 map
-	 * 							HttpMessageConverter에 의해 JSON -> Map 자동 변환
+	 * @param map : 입력 받은 email, authKey가 저장된 map
+	 * 		HttpMessageConverter에 의해 JSON -> Map 자동 변환
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("checkAuthKey")
 	public boolean checkAuthKey(
 		@RequestBody Map<String, String> map) {
+		
 		return service.checkAuthKey(map);
 	}
 	
+	
+	
+
 }
+
+
+

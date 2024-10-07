@@ -55,38 +55,39 @@ public class MemberServiceImpl implements MemberService{
 	public Member login(String memberEmail, String memberPw) {
 		
 		// 암호화 테스트
-		// log.debug("memberPw : {}", memberPw);
+		//log.debug("memberPw : {}", memberPw);
+		//log.debug("암호화된 memberPw : {}", encoder.encode(memberPw) );
 		
-		// log.debug("암호화된 memberPw : {}", encoder.encode(memberPw) );
 		
 		// 1. memberEmail이 일치하는 회원의 정보를 DB에서 조회
-		// 		(비밀번호 포함!)
+		//    (비밀번호 포함!)
 		Member loginMember = mapper.login(memberEmail);
 		
 		// 2. 이메일(id)이 일치하는 회원 정보가 없을 경우
 		if(loginMember == null) return null;
 		
-		// 3. DB에서 조회된 비밀번호와 입력받은 비밀번호가 같은지 확인
-//		log.debug("비밀번호 일치? : {}",
-//				encoder.matches(memberPw, loginMember.getMemberPw()));
 		
-		// 입력 받은 비밀번호와 DB에서 조회된 비밀번호가 일치하지 않을 때
-		if( !encoder.matches(memberPw, loginMember.getMemberPw())) {
+		// 3. DB에서 조회된 비밀번호와, 입력 받은 비밀번호가 같은지 확인
+		//	log.debug("비밀번호 일치? : {}",
+		//	encoder.matches(memberPw, loginMember.getMemberPw()));
+		
+		// 입력 받은 비밀 번호와 DB에서 조회된 비밀 번호가 일치하지 않을 때
+		if( !encoder.matches(memberPw, loginMember.getMemberPw()) ) {
 			return null;
 		}
 		
 		// 4. 로그인 결과 반환
 		return loginMember;
 	}
-
-
+	
+	
 	// 회원 가입
 	@Override
 	public int signUp(Member inputMember) {
 		
 		// 1) 비밀번호 암호화(BCrypt)
-		String encPw = encoder.encode(inputMember.getMemberPw()); // 입력된 비번을 암호화해서 encPw에 넣음
-		inputMember.setMemberPw(encPw); // 암호화 된 비번을 inputMember에 set(넣음)함
+		String encPw = encoder.encode(inputMember.getMemberPw());
+		inputMember.setMemberPw(encPw);
 		
 		// 2) 주소 미입력(",,") 시 null로 변경
 		if(inputMember.getMemberAddress().equals(",,")) {
@@ -100,7 +101,8 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.signUp(inputMember);
 	}
 	
-	// 이메일 중복 검사
+	
+	//  이메일 중복 검사
 	@Override
 	public int emailCheck(String email) {
 		return mapper.emailCheck(email);
@@ -110,12 +112,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int nicknameCheck(String nickname) {
 		return mapper.nicknameCheck(nickname);
-	}
-	
-	// 전화번호 중복 검사
-	@Override
-	public int telCheck(String tel) {
-		return mapper.telCheck(tel);
 	}
 }
 

@@ -13,7 +13,7 @@
     main{  padding: 20px; }
     hr{  margin: 40px 0;  }
   </style>
-  
+
 </head>
 
 <body>
@@ -78,19 +78,28 @@
       <input type="text" name="fileName">
 
       <button>제출</button>
+
     </form>
 
+
     <hr>
-    <h3>단일 파일 업로드 + 사용자 정의 예외를 이용한 예외 처리</h3>
+    <h3>
+      단일 파일 업로드 
+      + 사용자 정의 예외를 이용한 예외 처리
+    </h3>
 
-    <form action="/fileUpload/test3"
-          method="post"
-          enctype="multipart/form-data">
+    <form 
+      action="/fileUpload/test3"
+      method="POST"
+      enctype="multipart/form-data">
 
-      <input type="file" name="uploadFile">    
+      <input type="file" name="uploadFile">
       <button>제출</button>
       
     </form>
+
+
+    
 
 
 

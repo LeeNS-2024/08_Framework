@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 // Spring Security 자동 설정을 실행 시 포함하지 않음
 // -> Security 제공 로그인 페이지가 비활성화
-@SpringBootApplication( exclude = {SecurityAutoConfiguration.class} )
+@SpringBootApplication( exclude = {SecurityAutoConfiguration.class})
 public class BoardProjectApplication {
 
 	public static void main(String[] args) {

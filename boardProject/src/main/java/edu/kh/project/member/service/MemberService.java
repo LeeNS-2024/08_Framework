@@ -7,7 +7,7 @@ public interface MemberService {
 	/** 로그인 서비스
 	 * @param memberEmail
 	 * @param memberPw
-	 * @return lohinMember 또는 null(eamil 또는 pw 불일치)
+	 * @return loginMember 또는 null(email 또는 pw 불일치)
 	 */
 	Member login(String memberEmail, String memberPw);
 
@@ -28,11 +28,5 @@ public interface MemberService {
 	 * @return count
 	 */
 	int nicknameCheck(String nickname);
-
-	/** 전화번호 중복 검사
-	 * @param tel
-	 * @return
-	 */
-	int telCheck(String tel);
 
 }

@@ -98,10 +98,10 @@ public class MyPageServiceImpl implements MyPageService{
 	public String profile(MultipartFile profileImg, int memberNo) {
 		
 		// 1) 파일 업로드 확인
-		if(profileImg.isEmpty()) {
-		
-		// 제출된 파일이 없음 == X 버튼을 눌러 기본 이미지로 변경
-		// == DB에 저장된 이미지 경로가 NULL
+		if(profileImg.isEmpty()) { 
+			
+			// 제출된 파일이 없음 == X 버튼을 눌러 기본 이미지로 변경
+			// == DB에 저장된 이미지 경로가 NULL
 			int result = mapper.profile(null, memberNo);
 			return null;
 		}
@@ -118,12 +118,11 @@ public class MyPageServiceImpl implements MyPageService{
 		if(result == 0) return null; // 업데이트 실패 시 null 반환
 		
 		try {
-			// C:/uploadFiles/profile/ 폴더가 없으면 생성
+			// C:/uploadFiles/profile/  폴더가 없으면 생성
 			File folder = new File(profileFolderPath);
 			if(!folder.exists()) folder.mkdirs();
 			
-			// 업로드되어 임시저장된 이미지를
-			// 지정된 경로에 옮기기
+			// 업로드되어 임시저장된 이미지를 지정된 경로에 옮기기
 			profileImg.transferTo(
 					new File(profileFolderPath + rename));
 			
@@ -135,9 +134,5 @@ public class MyPageServiceImpl implements MyPageService{
 		// 업로드된 파일로 접근할 수 있는 웹 경로 반환
 		return profileWebPath + rename;
 	}
-	
-	
-	
-	
 	
 }

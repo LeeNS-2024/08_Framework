@@ -102,7 +102,9 @@ const selectMemberList = () => {
       // 만약 탈퇴 상태인 경우 로그인 버튼 비활성화
       if(member.memberDelFl === 'Y'){
         loginBtn.disabled = true;
-      } else{
+
+      } else {
+
         // 탈퇴 상태가 아닌 경우
         // 만들어진 로그인 버튼에 클릭 이벤트 추가
         loginBtn.addEventListener("click", () => {
@@ -111,24 +113,24 @@ const selectMemberList = () => {
           // 제출하는 형식으로 코드 작성
           // 왜? POST 방식 요청을 하고 싶기 때문에
           
-          const form  = document.createElement("form");
+          const form = document.createElement("form");
           form.action = "/directLogin";
           form.method = "POST";
 
           const input = document.createElement("input");
-          input.type  = "hidden";
-          input.name  = "memberNo";
+          input.type = "hidden";
+          input.name = "memberNo";
           input.value = member.memberNo;
 
           form.append(input); // form 자식으로 input 추가
 
           // body 태그 자식으로 form 추가
           document.querySelector("body").append(form);
-
+          
           form.submit(); // 제출
-
         })
       }
+
 
 
       // th > button 만들어서 "비밀번호 초기화" 글자 세팅
@@ -137,40 +139,23 @@ const selectMemberList = () => {
       initBtn.innerText = "비밀번호 초기화";
       th5.append(initBtn);
 
-      // 만약 탈퇴 상태인 경우 비밀번호 초기화 버튼 비활성화
-      if(member.memberDelFl === 'Y'){
-        initBtn.disabled = true;
-      } else{
-        // 탈퇴 상태 아닌 경우
-        // 만들어진 비밀번호 초기화 버튼에 클릭 이벤트 추가
-        initBtn.addEventListener("click", () =>{
+      initBtn.addEventListener("click", () => {
 
-          fetch("/resetPw", {
-            method  : "POST",
-            headers : {"Content-Type" : "application/json"},
-            body    : member.memberNo
-        
-            // POST 방식으로 
-            // /resetPw 요청을 처리하는 컨트롤러에
-            // 입력된 memberNo 값을 body에 담아서 제출
-          })
-          .then(response => { // fetch값을 response 라는 변수명에 담아서 함수 실행
-            if(response.ok) return response.text(); // ok => 200번 (정상 실행)
-                                                    // response.text() => response를 텍스트화
-            throw new Error("비밀번호 초기화 실패");
-          })
-          .then(result => { // 윗 값을 result 라는 변수명에 담아서 함수 실행
-            if(result > 0){
-              alert("비밀번호가 초기화 되었습니다");
-            }else{
-              alert("실패하였습니다");
-            }
-          })
-          .catch(err => console.error(err));
-        
-          // .then .then .catch => 오류들을 잡고 창에 오류가 직접적으로 안 뜨도록.
+        fetch("/resetPw ", {
+          method : "POST",
+          headers : {"Content-Type" : "application/json"},
+          body : member.memberNo
         })
-      }
+        .then(resp => {
+          if(resp.ok) return resp.text();
+          throw new Error("비밀번호 초기화 오류");
+        })
+        .then(aaa => {
+          if(aaa > 0) alert("비밀번호가 초기화 되었습니다");
+          else alert("실패!");
+        })
+        .catch(er => console.error(er));
+      })
 
       // th > button 만들어서 "탈퇴 상태 변경" 글자 세팅
       const th6 = document.createElement("th");
@@ -179,29 +164,22 @@ const selectMemberList = () => {
       th6.append(changeBtn);
 
       changeBtn.addEventListener("click", () => {
-        fetch("/changeStatus",{
-          method    : "PUT",
-          headers   : {"Content-Type" : "application/json"},
-          body      : member.memberNo
-        })
-        .then(res => {
-          if(res.ok) return res.text();
 
-          throw new Error("탈퇴 상태 변경 실패")
+        fetch("/changeStatus", {
+          method : "PUT",
+          headers : {"Content-Type" : "application/json"},
+          body : member.memberNo
         })
-        .then(rt => {
-          if(rt > 0 ){
-            alert("탈퇴 상태변경이 되었습니다");
-          //  location.href("/");
-           selectMemberList();
-          }else{
-            alert("실패하였습니다");
-          }
+        .then(resp => {
+          if(resp.ok) return resp.text();
+          throw new Error("탈퇴 상태 변경 오류");
         })
-        .catch(err => console.error(err));
-        // location.href("/");
+        .then(result => {
+          if(result > 0)  selectMemberList();
+        })
+        .catch(er => console.error(er));
       })
-      
+
 
       // tr에 만든 th,td 모두 추가
       tr.append(th1, td2, th3, th4, th5, th6);
@@ -215,7 +193,9 @@ const selectMemberList = () => {
 
 }
 
-/* 페이지 로딩(랜더링) 끝난 후 수행 */
+
+
+/* 페이지 로딩(렌더링) 끝난 후 수행 */
 document.addEventListener("DOMContentLoaded", () => {
   selectMemberList();
 })

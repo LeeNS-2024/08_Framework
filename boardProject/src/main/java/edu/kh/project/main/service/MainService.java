@@ -19,11 +19,11 @@ public interface MainService {
 
 	/** 비밀번호 초기화
 	 * @param memberNo
-	 * @return
+	 * @return result
 	 */
 	int resetPw(int memberNo);
 
-	/** 탈퇴 상태 변경
+	/** 회원 탈퇴 상태 변경
 	 * @param memberNo
 	 * @return
 	 */

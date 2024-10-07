@@ -11,12 +11,12 @@ public interface FileUploadMapper {
 
 	/** 파일 1개 정보 DB에 삽입
 	 * @param file
-	 * @return
+	 * @return result
 	 */
 	int fileInsert(FileDto file);
 
 	/** 파일 목록 조회
-	 * @return
+	 * @return fileList
 	 */
 	List<FileDto> selectFileList();
 
