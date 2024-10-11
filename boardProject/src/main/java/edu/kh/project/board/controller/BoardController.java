@@ -21,12 +21,14 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.board.dto.Board;
+import edu.kh.project.board.dto.Comment;
 import edu.kh.project.board.dto.Pagination;
 import edu.kh.project.board.service.BoardService;
 import edu.kh.project.member.dto.Member;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,13 +76,14 @@ public class BoardController {
 	
 	
 	/** 게시글 상세 조회
-	 * @param boardCode   : 게시판 종류
-	 * @param boardNo     : 게시글 번호
-	 * @param model       : forward  시 request scope 값 전달 객체
-	 * @param ra          : redirect 시 request scope 값 전달 객체
+	 * @param boardCode : 게시판 종류
+	 * @param boardNo   : 게시글 번호
+	 * @param model     : forward  시 request scope 값 전달 객체
+	 * @param ra        : redirect 시 request scope 값 전달 객체
 	 * @param loginMember : 로그인한 회원 정보, 로그인 안되어 있으면 null
-	 * @param req					: 요청관련 데이터를 담고있는 객체(쿠키 포함)
-	 * @param resp				: 응답 방법을 담고 있는 객체 (쿠키 생성, 쿠키를 클라이언트에게 전달)
+	 * @param req  : 요청 관련 데이터를 담고 있는 객체(쿠키 포함)
+	 * @param resp : 응답 방법을 담고 있는 객체
+	 * 							 (쿠키 생성, 쿠키를 클라이언트에게 전달)
 	 * @throws ParseException 
 	 */
 	@GetMapping("{boardCode:[0-9]+}/{boardNo:[0-9]+}")
@@ -89,7 +92,8 @@ public class BoardController {
 		@PathVariable("boardNo")   int boardNo,	
 		Model model,
 		RedirectAttributes ra,
-		@SessionAttribute(value="loginMember", required=false) Member loginMember,
+		@SessionAttribute(value="loginMember", 
+										 required=false) Member loginMember,
 		HttpServletRequest req,
 		HttpServletResponse resp
 		) throws ParseException {
@@ -109,25 +113,27 @@ public class BoardController {
 		// 2) 서비스 호출 후 결과 반환 받기
 		Board board = service.selectDetail(map);
 		
-		/* 게시글 상세조회 결과가 없을 경우 */
+		/* 게시글 상세조회 결과가 없을 경우*/
 		if(board == null) {
 			ra.addFlashAttribute("message", "게시글이 존재하지 않습니다");
 			return "redirect:/board/" + boardCode;
 		}
 		
-		/* ------------------ 조회수 증가 시작 ------------------ */
+		
+		/* ------------  조회 수 증가 시작 ------------ */
 		
 		// 로그인한 회원이 작성한 글이 아닌 경우 + 비회원
 		if(loginMember == null
 				|| loginMember.getMemberNo() != board.getMemberNo()) {
 			
-			// 1. 요청에 담겨있는 모든 쿠키 얻어오기 / cookie 가 없을때 오류가 뜨는 경우를 if 로 잡아줌
-			Cookie[] cookies = null; 
-			Cookie c = null;
+			// 1. 요청에 담겨있는 모든 쿠키 얻어오기
+			Cookie[] cookies = null;
+			Cookie c = null; 
 			
 			if(req.getCookies() != null) {
-				cookies = req.getCookies();
 				
+				cookies = req.getCookies();
+			
 				for(Cookie temp : cookies) {
 					// Cookie는 Map형식(name=value)
 					
@@ -227,7 +233,8 @@ public class BoardController {
 			}
 		}
 		
-		/* ------------------ 조회수 증가 끝 !! ------------------ */
+		/* ------------  조회 수 증가 끝!! ------------ */
+		
 		
 		model.addAttribute("board", board);
 		
@@ -245,25 +252,23 @@ public class BoardController {
 			if(board.getThumbnail() != null) start = 1;
 			
 			model.addAttribute("start", start); // 0 또는 1
-			
 		}
-		
-		
 		return "board/boardDetail";
 	}
 	
 	
 	
+	
 	/** 좋아요 체크 or 해제
 	 * @param boardNo
-	 * @return map ( check, clear / 좋아요 개수 )
+	 * @param loginMember
+	 * @return map (check,clear / 좋아요 개수)
 	 */
 	@ResponseBody
 	@PostMapping("like")
 	public Map<String, Object> boardLike(
 		@RequestBody int boardNo,
-		@SessionAttribute("loginMember") Member loginMember
-		) {
+		@SessionAttribute("loginMember") Member loginMember) {
 		
 		int memberNo = loginMember.getMemberNo();
 		
@@ -271,17 +276,51 @@ public class BoardController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/** 댓글 목록 조회(비동기)
+	 * @param boardNo : 게시글 번호(쿼리스트링 전달 받음)
+	 * @param model : forward 대상에게 데이터를 전달하는 객체
+	 * @return
+	 */
+//	@ResponseBody
+	@GetMapping("commentList")
+	public String selectCommentList(
+		@RequestParam("boardNo") int boardNo,
+		Model model) {
+		
+		List<Comment> commentList = service.selectCommentList(boardNo);
+		
+		/* * 보통 비동기 통신(AJAX) 방법
+		 *  - 요청 -> 응답 (데이터)
+		 * 
+		 * * forward
+		 *  - 요청 위임
+		 *  - 요청에 대한 응답 화면(HTML) 생성을 
+		 *    템플릿 엔진(jsp, Thymeleaf)이 대신 수행
+		 *  
+		 *  - 동기식 X,
+		 *    템플릿 엔진을 이용해서 html 코드를 쉽게 생성
+		 *    
+		 * * @ResponseBody
+		 *  - 컨트롤러에서 반환 되는 값을 
+		 *    응답 본문에 그대로 반환
+		 *     -> 템플릿 엔진(thymeleaf)를 이용해서 html 코드를
+		 *        만들어서 반환 X
+		 *        데이터 있는 그대로를 반환 O
+		 */
+		
+		// Board 객체 생성
+		Board board = Board.builder().commentList(commentList).build();
+		
+		// "board"라는 key 값으로 생성한 Board 객체를
+		// forward 대상인 comment.html로 전달
+		model.addAttribute("board", board);
+		
+		// comment.html 중  comment-list 조각(fragment)에
+		// 작성된 thymeleaf 코드를 해석해서
+		// 완전한 HTML 코드로 변환 후
+		// 요청한 곳으로 응답( fetch() API 코드로 html 코드가 반환)
+		return "board/comment :: comment-list";
+	}
 	
 	
 	

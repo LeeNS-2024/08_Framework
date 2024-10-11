@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.kh.project.board.dto.Board;
+import edu.kh.project.board.dto.Comment;
 
 public interface BoardService {
 
@@ -16,13 +17,13 @@ public interface BoardService {
 
 	/** 게시글 상세 조회
 	 * @param map
-	 * @return
+	 * @return board
 	 */
 	Board selectDetail(Map<String, Integer> map);
 
-	/** 조회수 1 증가
+	/** 조회 수 1 증가
 	 * @param boardNo
-	 * @return
+	 * @return result
 	 */
 	int updateReadCount(int boardNo);
 
@@ -34,8 +35,14 @@ public interface BoardService {
 	Map<String, Object> boardLike(int boardNo, int memberNo);
 
 	/** DB에서 모든 게시판 종류를 조회
-	 * @return
+	 * @return 
 	 */
 	List<Map<String, String>> selectBoardTypeList();
+
+	/** 댓글 목록 조회
+	 * @param boardNo
+	 * @return commentList
+	 */
+	List<Comment> selectCommentList(int boardNo);
 
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import edu.kh.project.board.dto.Board;
+import edu.kh.project.board.dto.Comment;
 import edu.kh.project.board.dto.Pagination;
 import edu.kh.project.board.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -67,30 +68,30 @@ public class BoardServiceImpl implements BoardService{
 		
 		return map;
 	}
-
-	// 게시글 상세 조회
+	
+	
+	// 게시글 상세조회
 	@Override
 	public Board selectDetail(Map<String, Integer> map) {
 		
-		/* [boardNo처럼 하나의 값을 이용해 여러 번 SELECT 수행하는 경우]
-		 * 
+		/* [boardNo처럼 하나의 값을 이용해 
+		 *   여러 번 SELECT 수행하는 경우]
+		 *  
 		 * 1. 하나의 Service 메서드에서
-		 * 		여러 Mapper 메서드 호출하기
-		 * 
-		 * 		service -> mapper -> DB
-		 * 		(필요한 SELECT 만큼 전체 반복)
-		 * 
-		 * 
-		 * 2. MyBatis에서 제공하는
-		 * 		<resultMap>, <collection> 이용하기
-		 * 
-		 * 		service -> mapper(select 연속 수행) -> DB
+		 *    여러 Mapper 메서드 호출하기
+		 *    
+		 *    service -> mapper -> DB
+		 *    (필요한 SELECT 만큼 전체 반복)
+		 *    
+		 * 2. MyBatis에서 제공하는 
+		 *    <resultMap>, <collection> 이용하기
+		 *    
+		 *    service -> mapper(select 연속 수행) -> DB
 		 */
-		
 		return mapper.selectDetail(map);
 	}
-
-	// 조회수 1 증가
+	
+	// 조회 수 1 증가
 	@Override
 	public int updateReadCount(int boardNo) {
 		return mapper.updateReadCount(boardNo);
@@ -100,15 +101,13 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public Map<String, Object> boardLike(int boardNo, int memberNo) {
 		
-		// (board-mapper 에서 값을 얻어옴)
-		
-		// 1. 좋아요 누른적 있어? 검사
+		// 1. 좋아요 누른적있어? 검사
 		int result = mapper.checkBoardLike(boardNo, memberNo);
-				
+		
 		// result == 1 == 누른적 있음
 		// result == 0 == 누른적 없음
 		
-		// 2. 좋아요 여부에 따라 INSERT/DELETE Mapper 호출 
+		// 2. 좋아요 여부에 따라 INSERT/DELETE Mapper 호출
 		int result2 = 0;
 		if(result == 0) {
 			result2 = mapper.insertBoardLike(boardNo, memberNo);
@@ -117,7 +116,7 @@ public class BoardServiceImpl implements BoardService{
 		}
 		
 		// 3. INSERT, DELETE 성공 시 해당 게시글의 좋아요 개수 조회
-		int count =0;
+		int count = 0;
 		if(result2 > 0) {
 			count = mapper.getLikeCount(boardNo);
 		} else {
@@ -125,9 +124,9 @@ public class BoardServiceImpl implements BoardService{
 		}
 		
 		// 4. 좋아요 결과를 Map에 저장해서 반환
-		Map<String,Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		
-		map.put("count", count);	// 좋아요 개수
+		map.put("count", count); // 좋아요 개수
 		
 		if(result == 0) map.put("check", "insert");
 		else						map.put("check", "delete");
@@ -135,35 +134,20 @@ public class BoardServiceImpl implements BoardService{
 		return map;
 	}
 	
+	
 	// DB에서 모든 게시판 종류를 조회
 	@Override
 	public List<Map<String, String>> selectBoardTypeList() {
 		return mapper.selectBoardTypeList();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 댓글 목록 조회
+	@Override
+	public List<Comment> selectCommentList(int boardNo) {
+		return mapper.selectCommentList(boardNo);
+	}
 	
 }
+
+
+
