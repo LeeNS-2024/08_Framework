@@ -45,4 +45,12 @@ public interface BoardService {
 	 */
 	List<Comment> selectCommentList(int boardNo);
 
+	/** 게시글 검색
+	 * @param boardCode
+	 * @param cp
+	 * @param paramMap
+	 * @return
+	 */
+	Map<String, Object> selectSearchList(int boardCode, int cp, Map<String, Object> paramMap);
+
 }
