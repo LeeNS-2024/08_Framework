@@ -69,7 +69,22 @@
                   <!-- 상세조회 요청 주소 /board/{boardCode}/{boardNo} -->
                   
                   <!-- boardCode=1 -> 수정할 예정!!! -->
-                  <a th:href="@{/board/{boardCode}/{boardNo} (boardCode=${boardCode}, boardNo=*{boardNo})}" 
+                  <!-- param 중에 key 값이 없다면(unless) a태그를 출력하겠다 -->
+                  <!-- 검색이 아닌경우 -->
+                  <a th:unless= "${param.key}" 
+                      th:href="@{/board/{boardCode}/{boardNo}
+                              (boardCode=${boardCode}, 
+                              boardNo=*{boardNo})}" 
+                     th:text="*{boardTitle}">게시글 제목</a>
+
+                  <!-- 검색인경우 -->
+                  <a th:if= "${param.key}" 
+                      th:href="@{/board/{boardCode}/{boardNo}
+                              (boardCode=${boardCode}, 
+                              boardNo=*{boardNo},
+                              key=${param.key},
+                              query=${param.query}
+                              )}" 
                      th:text="*{boardTitle}">게시글 제목</a>
 
                   <!-- 댓글 수 -->

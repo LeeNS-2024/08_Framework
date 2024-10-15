@@ -95,6 +95,14 @@ public interface BoardMapper {
 	 */
 	List<Board> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
 
+	/** 현재 게시글이 포함된 목록의 페이지로 리다이렉트
+	 * @param boardCode
+	 * @param boardNo
+	 * @param limit
+	 * @return
+	 */
+	int getCurrentPage(Map<String, Object> paramMap);
+
 	
 	
 	
