@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원타입목록</title>
+</head>
+
+<body>
+
+	<table>
+		<thead>
+			<tr>
+				<th>회원 코드 번호 - </th>
+				<th>회원 종류 이름</th>
+			</tr>
+		</thead>
+			<!-- th:each -> 반복문 -->
+		<tbody>
+			<tr th:each="memberType : ${application.memberTypeList}">
+				<td>[[${memberType.memberTypeCode}]]</td>
+				<td>[[${memberType.memberTypeName}]]</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>
+<!-- [[${Key값을 넣으면됨.}]] -->
+<!-- [[${M_TYPE_NAME}]] ==  <th:block th:text="${M_TYPE_NAME}"></th:block> -->
