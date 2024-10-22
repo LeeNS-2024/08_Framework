@@ -20,7 +20,7 @@ public class CommentServiceImpl implements CommentService {
 		
 		int result = mapper.commentInsert(comment);
 		
-		// 삽입 성공 시
+		// 삽입 성공 시 댓글 번호 반환
 		if(result > 0) return comment.getCommentNo();
 		
 		// 실패 시 0
@@ -33,10 +33,12 @@ public class CommentServiceImpl implements CommentService {
 		return mapper.commentDelete(commentNo, memberNo);
 	}
 	
+	
 	// 댓글 수정
 	@Override
 	public int commentUpdate(Comment comment) {
 		return mapper.commentUpdate(comment);
 	}
+	
 	
 }

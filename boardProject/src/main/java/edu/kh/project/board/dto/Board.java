@@ -40,6 +40,9 @@ public class Board {
 	private int		 commentCount;
 	private int		 likeCount;
 	
+	//------------------------------
+	// (추가 작성 예정)
+	
 	private String thumbnail; // 썸네일 이미지
 	private String profileImg; // 작성자 프로필 이미지
 	
@@ -51,13 +54,8 @@ public class Board {
 	
 	// 좋아요 체크 여부를 저장할 필드(1 == 누른적 있음)
 	private int likeCheck;
-
-	//------------------------------
-	// (추가 작성 예정)
 	
-	}
-	
-	
-	
+	 
+}
 
 

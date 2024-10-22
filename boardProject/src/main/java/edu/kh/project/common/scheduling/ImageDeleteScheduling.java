@@ -72,11 +72,10 @@ public class ImageDeleteScheduling {
 
         log.info("{} 삭제", serverFile.getName());
         serverFile.delete(); // 파일 삭제
-      }
+      }   
     }
 
-    log.info("------------------------ 이미지 삭제 스케쥴러 종료 ------------------------");
-
+    log.info("----------- 이미지 삭제 스케쥴러 종료 -----------");
   }
 
 }

@@ -29,11 +29,11 @@
     <property name="FILE_LOG_CHARSET" value="${FILE_LOG_CHARSET:-default}"/>
     
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">        
-		<encoder>            
-			<pattern>${CONSOLE_LOG_PATTERN}</pattern>            
-			<charset>${CONSOLE_LOG_CHARSET}</charset>        
-		</encoder>    
-	</appender>      
+      <encoder>            
+        <pattern>${CONSOLE_LOG_PATTERN}</pattern>            
+        <charset>${CONSOLE_LOG_CHARSET}</charset>        
+      </encoder>    
+    </appender>      
 
 	<include resource="org/springframework/boot/logging/logback/file-appender.xml" />        
 	<logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>    

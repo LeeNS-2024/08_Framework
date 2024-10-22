@@ -8,18 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller // controller 임을 명시 + Bean 등록
-public class CommonErrorController implements ErrorController{
-	
-	// ErrorController 인터페이스를 상속받은 경우
+@Controller // 컨트롤러 명시 + Bean 등록
+public class CommonErrorController implements ErrorController {
+
+	// ErrorController 인터페이스를 상속 받은 경우
 	// 기존 spring에서 에러를 처리하던 코드(에러 출력 페이지 forward)를
 	// 대체해서 동작함!!
 	
 	// [동작 순서]
-	
 	// @ControllerAdvice에서 일치하는 예외 처리 메서드 찾기
 	// -> 없으면 ErrorController 구현 객체가 처리
-	
 	
 	/** 공용 예외 처리 메서드
 	 * @param model
@@ -35,12 +33,19 @@ public class CommonErrorController implements ErrorController{
 		
 		// 에러 메시지 얻어오기
 		Object message = req.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-		String errorMessage = (message != null) ? message.toString() : "알 수 없는 오류 발생";
+		String errorMessage
+			= (message != null) ? message.toString()
+												  : "알 수 없는 오류 발생";
 		
 		model.addAttribute("errorMessage", errorMessage);
 		model.addAttribute("statusCode", statusCode);
 		
+		
+
 		return "error/common-error";
 	}
-
+	
+	
+	
+	
 }

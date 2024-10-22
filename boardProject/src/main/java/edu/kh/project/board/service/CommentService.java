@@ -13,13 +13,13 @@ public interface CommentService {
 	/** 댓글 삭제
 	 * @param commentNo
 	 * @param memberNo
-	 * @return
+	 * @return result
 	 */
 	int commentDelete(int commentNo, int memberNo);
 
 	/** 댓글 수정
 	 * @param comment
-	 * @return
+	 * @return result
 	 */
 	int commentUpdate(Comment comment);
 

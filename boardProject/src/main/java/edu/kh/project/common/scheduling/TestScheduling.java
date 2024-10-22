@@ -56,8 +56,8 @@ public class TestScheduling {
   // @Scheduled(fixedRate = 5000) // ms 단위
   // @Scheduled(cron = "0/10 * * * * *") // 0,10,20,30,40,50 초 마다 수행
   // @Scheduled(cron = "0 * * * * *") // 매 분 0초 마다 수행
-	// @Scheduled(cron="0 0 * * * *") // 매 시간 정각 마다
-  @Scheduled(cron="59 59 23 * * *") // 매일 23시 59분 59초
+  // @Scheduled(cron="0 0 * * * *") // 매 시간 정각 마다
+  // @Scheduled(cron = "59 59 23 * * *") // 매일 23시 59분 59초 마다
   public void testMethod(){
     log.info("@@@@@ 스케쥴러 테스트 작동중 @@@@@");
   }

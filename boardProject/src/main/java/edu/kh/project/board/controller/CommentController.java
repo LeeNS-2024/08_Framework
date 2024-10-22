@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -36,7 +35,7 @@ public class CommentController {
 	@PostMapping("comment") // POST == CREATE/INSERT 의미
 	public int commentInsert(
 		@RequestBody Comment comment,
-		@SessionAttribute("loginMember") Member loginMember) { // @SessionAttribute로 회원정보 가져올 수 있음
+		@SessionAttribute("loginMember") Member loginMember) {
 		
 		// 로그인된 회원 번호를 comment에 세팅
 		comment.setMemberNo(loginMember.getMemberNo());
@@ -53,13 +52,14 @@ public class CommentController {
 	@PutMapping("comment") // PUT == UPDATE 의미
 	public int commentUpdate(
 		@RequestBody Comment comment,
-		@SessionAttribute("loginMember") Member loginMember
-		) {
+		@SessionAttribute("loginMember") Member loginMember) {
 		
 		comment.setMemberNo(loginMember.getMemberNo());
 		
 		return service.commentUpdate(comment);
 	}
+	
+	
 	
 	
 	/** 댓글 삭제
@@ -74,7 +74,6 @@ public class CommentController {
 		
 		return service.commentDelete(commentNo, loginMember.getMemberNo());
 	}
-	
 	
 	
 	

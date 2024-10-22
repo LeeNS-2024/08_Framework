@@ -12,12 +12,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class SchedulingServiceImpl implements SchedulingService{
+  
+  private final SchedulingMapper mapper;
 
-	private final SchedulingMapper mapper;
-	
-	// DB에 기록된 모든 파일명 조회
-	@Override
-	public List<String> getDbFileNameList() {
-		return mapper.getDbFileNameList();
-	}
+  // DB에 기록된 모든 파일명 조회
+  @Override
+  public List<String> getDbFileNameList() {
+    return mapper.getDbFileNameList();
+  }
 }

@@ -1,7 +1,5 @@
 package edu.kh.project.error.controller;
 
-import java.sql.SQLException;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -42,8 +40,10 @@ public class ErrorControllerAdvice {
 
 		return "error/500";
 	}
-	
 
+	
+	
+	
 	/** 파라미터가 없을 때를 처리하는 메서드
 	 * @param e
 	 * @param model
@@ -57,7 +57,6 @@ public class ErrorControllerAdvice {
 		return "error/400"; // 400 에러 페이지로 이동
 	}
 
-	
 	
 	/** 파라미터의 자료형이 일치하지 않을 때 처리하는 메서드
 	 * @param e
@@ -74,6 +73,7 @@ public class ErrorControllerAdvice {
 	}
 
 	
+	
 	/** 요청 주소를 찾을 수 없을 경우 처리하는 메서드(404)
 	 * @return
 	 */
@@ -86,8 +86,6 @@ public class ErrorControllerAdvice {
 	
 	
 	
-	
-
 	
 	
 	// 예외의 스택 트레이스를 문자열로 변환하는 메서드

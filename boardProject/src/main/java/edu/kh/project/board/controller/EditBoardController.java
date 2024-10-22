@@ -198,54 +198,49 @@ public class EditBoardController {
 			return "redirect:/board/" + boardCode; // 게시글 목록
 		}
 		
-		// 게시글 작성자가 로그인한 회원이 아닌경우
+		// 게시글 작성자가 로그인한 회원이 아닌 경우
 		if(board.getMemberNo() != loginMember.getMemberNo()) {
-			ra.addFlashAttribute("message", "글 작성자만 수정 가능합니다");
+			ra.addFlashAttribute("message", 
+													 "글 작성자만 수정 가능합니다");
 			
-			return String.format("redirect:/board/%d/%d", boardCode, boardNo); // 상세 조회
+			return String.format("redirect:/board/%d/%d", 
+														boardCode, boardNo); // 상세 조회
 		}
 		
 		// 게시글이 존재하고
 		// 로그인한 회원이 작성한 글이 맞을 경우
-		// 수정화면으로 forward
+		// 수정 화면으로 forward
 		model.addAttribute("board", board);
 		return "board/boardUpdate";
-		
-		
-	  
 	}
 	
 	
-	
-
 	/** 게시글 수정
-	 * @param boardCode
-	 * @param boardNo
-	 * @param inputBoard
-	 * @param loginMember
-	 * @param images
-	 * @param deleteOrderList
-	 * @param ra
+	 * 
 	 * @return
 	 */
 	@PostMapping("{boardCode:[0-9]+}/{boardNo:[0-9]+}/update")
 	public String boardUpdate(
 		@PathVariable("boardCode") int boardCode,
 		@PathVariable("boardNo") int boardNo,
-		@ModelAttribute Board inputBoard, // 제출된 값 중에서 name 값이 Board와 같으면 inputBoard에 넣게함
+		@ModelAttribute Board inputBoard,
 		@SessionAttribute("loginMember") Member loginMember,
 		@RequestParam("images") List<MultipartFile> images,
-		@RequestParam(value="deleteOrderList", required = false) String deleteOrderList,
+		@RequestParam(value="deleteOrderList", required = false)
+			String deleteOrderList,
 		RedirectAttributes ra
 		) {
 		
 		// 1. 커맨드 객체 inputBoard에 로그인한 회원 번호 추가
 		inputBoard.setMemberNo(loginMember.getMemberNo());
 		
-		// inputBoard에 세팅된 값 : boardCode, boardNo, boardTitle, boardContent, memberNo
+		// inputBoard에 세팅된 값
+		// : boardCode, boardNo, boardTitle, boardContent, memberNo
+		
 		
 		// 2. 게시글 수정 서비스 호출 후 결과 반환
 		int result = service.boardUpdate(inputBoard, images, deleteOrderList);
+		
 		
 		String message = null;
 		if(result > 0) {
@@ -253,48 +248,12 @@ public class EditBoardController {
 		} else {
 			message = "수정 실패";
 		}
-		
+
 		ra.addFlashAttribute("message", message);
 		
-		return String.format("redirect:/board/%d/%d", boardCode,boardNo); // 상세 조회
+		return String.format("redirect:/board/%d/%d",
+												   boardCode, boardNo); // 상세 조회
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

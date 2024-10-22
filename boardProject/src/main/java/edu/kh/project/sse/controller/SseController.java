@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.thymeleaf.expression.Arrays;
 
 import edu.kh.project.member.dto.Member;
 import edu.kh.project.sse.dto.Notification;
@@ -97,8 +98,9 @@ public class SseController {
     }
   }
 
-  // ---------------------------------------------------------------------------------------------------------
   
+  // -------------------------------------------------
+
   /**
    * 로그인한 회원의 알림 목록 조회
    * @param loginMember
@@ -111,23 +113,21 @@ public class SseController {
     int memberNo = loginMember.getMemberNo();
     return service.selectNotificationList(memberNo);
   }
- 
-  
-  /** 
-   * 현재 로그인한 회원의 알림 중 읽지 않은 알림 개수 조회
+
+  /**
+   * 현재 로그인한 회원이 받은 알림 중 
+   * 읽지 않은 알림 개수 조회
    * ("NOTIFICATION".NOTIFICATION_CHECK = 'N')
    * @return
    */
   @GetMapping("notification/notReadCheck")
   public int notReadCheck(
-  	@SessionAttribute("loginMember") Member loginMember
-  	) {
-  	
-  	int memberNo = loginMember.getMemberNo();
-  	return service.selectNotReadCheck(memberNo);
+    @SessionAttribute("loginMember") Member loginMember
+    ){
+    
+    return service.notReadCheck(loginMember.getMemberNo());
   }
-  
-  
+
   /** 알림 삭제 */
   @DeleteMapping("notification")
   public void deleteNotification(
@@ -135,42 +135,17 @@ public class SseController {
     service.deleteNotification(notificationNo);
   }
 
-  
   /**
-   * 알림 읽음 여부 변경(N -> Y)
+   * 알림 읽음 여부 변경(N->Y)
    * @param notificationNo
    */
   @PutMapping("notification")
   public void updateNotification(
-  	@RequestBody int notificationNo) {
-  	
-  	service.uppdateNotification(notificationNo);
+    @RequestBody int notificationNo){
+  
+    service.updateNotification(notificationNo);
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
 
 }

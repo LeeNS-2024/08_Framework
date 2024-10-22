@@ -45,6 +45,25 @@ const connectSse = () => {
     const obj = JSON.parse(e.data);
     console.log(obj); // 알림을 받는 사람 번호, 읽지 않은 알림 개수
 
+
+    /* 채팅 알림을 받았는데 해당 채팅방에 입장한 상태인 경우 알림 X */
+    try{
+      if(selectChattingNo && selectChattingNo == obj.chattingRoomNo){
+        fetch("/notification", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: obj.notificationNo
+        })
+        .then(resp => {
+          if (!resp.ok) throw new Error("채팅 알림 삭제 실패");
+        })
+        .catch(err => console.error(err));
+        return;
+      }
+    }catch(e){}
+    /* ------------------------------------------------------------ */
+
+
     // 종 버튼에 색 추가(활성화)
     const notificationBtn
       = document.querySelector(".notification-btn");
@@ -57,12 +76,15 @@ const connectSse = () => {
 
     notificationCountArea.innerText = obj.notiCount;
 
+
     /* 만약 알림 목록이 열려 있을 경우 */
-    const notificationList = document.querySelector(".notification-list");
+    const notificationList
+      = document.querySelector(".notification-list");
 
     if(notificationList.classList.contains("notification-show")){
       selectNotificationList(); // 알림 목록 비동기 조회
     }
+
   });
 
   /* 서버 연결이 종료된 경우(타임아웃 초과) */
@@ -254,7 +276,7 @@ const notReadCheck = () => {
     throw new Error("알림 개수 조회 실패");
   })
   .then(count => {
-    // // console.log(count);
+    // console.log(count);
 
     const notificationBtn =
       document.querySelector(".notification-btn");
@@ -294,7 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   notReadCheck(); // 알림 개수 조회
 
-
   // 종 버튼(알림) 클릭 시 알림 목록이 출력하기
   const notificationBtn 
     = document.querySelector(".notification-btn");
@@ -325,23 +346,23 @@ document.addEventListener("DOMContentLoaded", () => {
     해당 댓글을 찾아 화면을 스크롤해서 이동하기
   */
 
-  // 쿼리 스트링 다룰 수 있는 객체
+  // 쿼리스트링 다룰 수 있는 객체 
   const params = new URLSearchParams(location.search);
   const cn = params.get("cn"); // cn 값 얻어오기
 
-  if(cn !=null){ // cn이 존재하는 경우
+  if(cn != null){ // cn이 존재하는 경우
     const targetId = "c" + cn; // "c100", "c1234" 형태로 변환
 
-    // 아이디가 일치하는 댓글요소 얻어오기
+    // 아이디가 일치하는 댓글 요소 얻어오기
     const target = document.getElementById(targetId);
 
-    // 댓글 요소가 제일 위에서 얼만큼 떨어져 있는지 반환받기
+    // 댓글 요소가 제일 위에서 얼만큼 떨어져 있는지 반환 받기
     const scrollPosition = target.offsetTop;
 
     // 창을 스크롤
     window.scrollTo({
       top : scrollPosition - 200 , // 스크롤할 길이
-      behavior  : "smooth" // 부드럽게 동작(행동)하도록 지정
+      behavior : "smooth" // 부드럽게 동작(행동)하도록 지정
     });
 
   }

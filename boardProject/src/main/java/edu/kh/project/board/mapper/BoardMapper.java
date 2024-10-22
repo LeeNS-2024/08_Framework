@@ -26,25 +26,26 @@ public interface BoardMapper {
 	 */
 	List<Board> selectBoardList(int boardCode, RowBounds rowBounds);
 
+	
 	/** 게시글 상세 조회
 	 * @param map
 	 * @return board
 	 */
 	Board selectDetail(Map<String, Integer> map);
 
-	/** 조회수 1 증가
+	/** 조회 수 1 증가
 	 * @param boardNo
-	 * @return
+	 * @return result
 	 */
 	int updateReadCount(int boardNo);
 
-	/** 좋아요 누른적 있어? 검사
+	/** 좋아요 누른적있어? 검사
 	 * @param boardNo
 	 * @param memberNo
 	 * @return result
 	 */
-	int checkBoardLike(@Param("boardNo")  int boardNo,  // @Param이 없으면 앞에것만 인식됨.
-										 @Param("memberNo")	int memberNo);
+	int checkBoardLike(@Param("boardNo")  int boardNo, 
+										 @Param("memberNo") int memberNo);
 
 	
 	/** 좋아요 테이블에 삽입
@@ -53,18 +54,16 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int insertBoardLike(@Param("boardNo")  int boardNo, 
-											@Param("memberNo") int memberNo);
+			 							  @Param("memberNo") int memberNo);
 
-	
 	/** 좋아요 테이블에서 삭제
 	 * @param boardNo
 	 * @param memberNo
 	 * @return
 	 */
 	int deleteBoardLike(@Param("boardNo")  int boardNo, 
-											@Param("memberNo") int memberNo);
+			 							  @Param("memberNo") int memberNo);
 
-	
 	/** 좋아요 개수 조회
 	 * @param boardNo
 	 * @return count
@@ -78,46 +77,31 @@ public interface BoardMapper {
 
 	/** 댓글 목록 조회
 	 * @param boardNo
-	 * @return
+	 * @return commentList
 	 */
 	List<Comment> selectCommentList(int boardNo);
 
-	/** 검색조건에 맞는 게시글 갯수
-	 * @param paramMap
-	 * @return
+	/** 검색 조건이 맞는 게시글 수 조회
+	 * @param paramMap(key, query, boardCode)
+	 * @return count
 	 */
 	int getSearchCount(Map<String, Object> paramMap);
 
-	/** 검색한 게시글 목록 조회
+	/** 검색 목록 조회
 	 * @param paramMap
 	 * @param rowBounds
-	 * @return
+	 * @return boardList
 	 */
 	List<Board> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
 
-	/** 현재 게시글이 포함된 목록의 페이지로 리다이렉트
-	 * @param boardCode
-	 * @param boardNo
-	 * @param limit
-	 * @return
+	/** 현재 게시글이 속해있는 페이지 번호 조회
+	 * @param paramMap
+	 * @return cp
 	 */
 	int getCurrentPage(Map<String, Object> paramMap);
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

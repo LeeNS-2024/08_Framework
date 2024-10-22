@@ -26,7 +26,7 @@ public interface EditBoardService {
 	 * @param inputBoard
 	 * @param images
 	 * @param deleteOrderList
-	 * @return
+	 * @return result
 	 */
 	int boardUpdate(Board inputBoard, List<MultipartFile> images, String deleteOrderList);
 
