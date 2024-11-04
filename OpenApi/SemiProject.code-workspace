@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../SemiProject"
+		},
+		{
+			"path": "../boardProject"
+		}
+	],
+	"settings": {
+		"codetogether.virtualCursorJoin": "sharedVirtualCursor"
+	}
+}
