@@ -59,7 +59,7 @@ const getAirQuality =  async (cityName) => {
     if(!response2.ok) throw new Error("공공데이터 조회 실패");
 
     const data = await response2.json();
-
+    console.log(data)
 
     // 필요한 데이터만 추출
     const item = data.response.body.items[0];
@@ -94,6 +94,7 @@ const getAirQuality =  async (cityName) => {
     pm25GradeText.innerText = gredeText [item.pm25Grade - 1];
     pm25Value.innerText     = `초미세먼지 농도 : ${item['pm25Value']} ㎍/㎥`;
 
+
   }catch(err){
     console.error(err);
   }
@@ -101,12 +102,24 @@ const getAirQuality =  async (cityName) => {
 
 // 조회 버튼 클릭 시
 document.querySelector("#selectBtn").addEventListener("click", () => {
-  
   const cityName = document.querySelector("#cityName").value;
   getAirQuality(cityName);
 });
 
 // 페이지 로딩 완료 시
-document.addEventListener("DOMContentLoaded", () =>{
+document.addEventListener("DOMContentLoaded", () => {
   getAirQuality("서울");
+})
+
+
+
+// ----------------------------------------------------------
+
+// Java 부분 select 변경 후 조회 클릭 시에 대한 동작
+document.querySelector("#selectBtn2").addEventListener("Click", () => {
+
+  // 선택한 도시명
+  const cityName = document.querySelector("#cityName2").value;
+
+  location.href = location.pathname + "?cityName=" + cityName;
 })
