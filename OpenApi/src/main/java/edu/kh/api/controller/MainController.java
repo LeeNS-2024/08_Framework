@@ -14,6 +14,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -162,7 +165,6 @@ public class MainController {
 		return "main";
 	}
 	
-
 	/* ResponseEntity : @ResponseBody + 응답 상태 코드
 	 * 
 	 * - HTTP 응답을 표현할 수 있는 객체
@@ -223,6 +225,8 @@ public class MainController {
 	log.debug(sb.toString());
 	return "air";
 	}
+	
+	
 	
 	
 	
